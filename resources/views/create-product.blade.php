@@ -473,15 +473,23 @@
         var total_price = $("input[name=total_price]").val();
         var vendor_id = $("select[name=vendor_id]").val();
         var _token   = $('meta[name="csrf-token"]').attr('content');
-        let formData = {
-            _token: _token,
-            item_name:item_name,
-            item_quantity:item_quantity,
-            unit_price:unit_price,
-            total_price:total_price,
-            vendor_id:vendor_id
+        if(item_name != "" && item_quantity !=""
+            && unit_price !="" && total_price !="" && vendor_id !=""){
+            let formData = {
+                _token: _token,
+                item_name:item_name,
+                item_quantity:item_quantity,
+                unit_price:unit_price,
+                total_price:total_price,
+                vendor_id:vendor_id
+            }
+            formSubmit('/product',formData,'POST');
+        }else{
+            swal("Please input all field",{
+                icon:"warning"
+            })
         }
-        formSubmit('/product',formData,'POST');
+
     });
     $(document).on("change", "#unit_price,#item_quantity" , function() {
         let quantity = $('#item_quantity').val();

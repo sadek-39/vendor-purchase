@@ -447,18 +447,27 @@
         var total_price = $("input[name=total_price]").val();
         var vendor_id = $("select[name=vendor_id]").val();
         var _token   = $('meta[name="csrf-token"]').attr('content');
-        let formData = {
-            _token: _token,
-            item_name:item_name,
-            item_quantity:item_quantity,
-            unit_price:unit_price,
-            total_price:total_price,
-            vendor_id:vendor_id
-        }
-        let url = '/product/'+{{$product->id}};
 
-        let type = 'PUT';
-        formSubmit(url,formData,type);
+        if(item_name != "" && item_quantity !=""
+            && unit_price !="" && total_price !="" ){
+            let formData = {
+                _token: _token,
+                item_name:item_name,
+                item_quantity:item_quantity,
+                unit_price:unit_price,
+                total_price:total_price,
+                vendor_id:vendor_id
+            }
+            let url = '/product/'+{{$product->id}};
+
+            let type = 'PUT';
+            formSubmit(url,formData,type);
+        }else{
+            swal("please fill all fields",{
+                icon:"warning"
+            })
+        }
+
     });
 
     $(document).on("change", "#unit_price,#item_quantity" , function() {
