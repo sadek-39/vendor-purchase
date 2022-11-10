@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Vendor\VendorStoreRequest;
+use App\Http\Requests\Vendor\VendorUpdateRequest;
 use App\Models\Vendor;
 use App\Services\VendorServices;
 use Illuminate\Http\Request;
@@ -46,7 +48,7 @@ class VendorController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(VendorStoreRequest $request)
     {
         //
         try {
@@ -93,7 +95,7 @@ class VendorController extends Controller
      * @param \App\Models\Vendor $vendor
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Vendor $vendor)
+    public function update(VendorUpdateRequest $request, Vendor $vendor)
     {
         //
         try {

@@ -432,20 +432,20 @@
     <form>
         <div class="form-group">
             <label for="name">Vendor Name</label>
-            <input type="text" class="form-control" id="name" name="name"
+            <input type="text" class="form-control" id="name" name="name" required
                    placeholder="Enter vendor name">
         </div>
         <div class="form-group">
             <label for="email">Email</label>
-            <input type="email" class="form-control" id="email" name="email" placeholder="Enter email address">
+            <input type="email" class="form-control" id="email" name="email" placeholder="Enter email address" required>
         </div>
         <div class="form-group">
             <label for="phone">Phone</label>
-            <input type="text" class="form-control" id="phone" name="phone" placeholder="Enter phone number">
+            <input type="text" class="form-control" id="phone" name="phone" placeholder="Enter phone number" required>
         </div>
         <div class="form-group">
             <label for="address">Address</label>
-            <input type="text" class="form-control" id="address" name="address" placeholder="Enter address">
+            <input type="text" class="form-control" id="address" name="address" placeholder="Enter address" required>
         </div>
 
         <button type="submit" id="submitbtn" class="btn btn-primary">Submit</button>
@@ -477,7 +477,6 @@
     });
 
     $("#submitbtn").click(function(e){
-
         e.preventDefault();
 
         var name = $("input[name=name]").val();
@@ -485,14 +484,22 @@
         var phone = $("input[name=phone]").val();
         var address = $("input[name=address]").val();
         var _token   = $('meta[name="csrf-token"]').attr('content');
-        let formData = {
-            _token: _token,
-            name:name,
-            phone:phone,
-            email:email,
-            address:address
+
+        if(name != "" && email != "" && phone != "" && address != ""){
+            let formData = {
+                _token: _token,
+                name:name,
+                phone:phone,
+                email:email,
+                address:address
+            }
+            formSubmit('/vendor',formData,'POST');
+        }else{
+            swal("Please input all required field",{
+                icon:"warning"
+            });
         }
-        formSubmit('/vendor',formData,'POST');
+
     });
 
     $(document).on("click", ".edit" , function() {

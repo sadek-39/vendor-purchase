@@ -447,15 +447,22 @@
         var _token   = $('meta[name="csrf-token"]').attr('content');
 
         let url = '/vendor/'+{{$vendor->id}};
-        let data = {
-            _token: _token,
-            name:name,
-            phone:phone,
-            email:email,
-            address:address
+        if(name != "" && email != "" && phone != "" && address != ""){
+            let data = {
+                _token: _token,
+                name:name,
+                phone:phone,
+                email:email,
+                address:address
+            }
+            let type = 'PUT';
+            formSubmit(url,data,type);
+        }else{
+            swal("Please input all required field",{
+                icon:"warning"
+            });
         }
-        let type = 'PUT';
-        formSubmit(url,data,type);
+
     });
 
 
