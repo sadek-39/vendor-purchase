@@ -3,10 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Services\ProductServices;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+    private $productServices;
+
+    public function __construct
+    (
+        ProductServices $productServices
+    )
+    {
+        $this->productServices = $productServices;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +24,10 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $products = $this->productServices->getAll();
+
+        return response()->json($products,200);
+
     }
 
     /**
@@ -24,7 +37,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return view('create-product');
     }
 
     /**
@@ -35,7 +48,15 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $productStore = $this->productServices->store($request->all());
+            return response()->json('Product saved successfully', 200);
+
+
+        } catch (\Exception $exception) {
+            return response()->json($exception->getMessage(), 400);
+
+        }
     }
 
     /**
@@ -57,7 +78,10 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        //
+        return view('edit-product',
+        compact(
+            'product'
+        ));
     }
 
     /**
@@ -69,7 +93,15 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        //
+        try {
+            $update = $this->productServices->update($product->id, $request->all());
+
+            return response()->json('Updated successfully', 200);
+        } catch (\Exception $exception) {
+
+            return response()->json($exception->getCode(), 400);
+
+        }
     }
 
     /**
@@ -80,6 +112,15 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        try {
+            $product = $this->productServices->delete($product);
+
+
+            return response()->json('Deleted successfully',200);
+
+        }catch (\Exception $exception){
+            return response()->json($exception->getMessage(),400);
+
+        }
     }
 }
