@@ -33,7 +33,7 @@ class ProductRepository implements ProductRepositoryInterface
         $product['item_quantity'] = $data['item_quantity'];
         $product['unit_price'] = $data['unit_price'];
         $product['total_price'] = $data['item_quantity'] * $data ['unit_price'];
-        $product['vendor_id'] = $data['vendor_id'] ;
+        $product['vendor_id'] = $data['vendor_id'];
 
         $product->save();
 
@@ -49,6 +49,7 @@ class ProductRepository implements ProductRepositoryInterface
         $product['item_quantity'] = $data['item_quantity'];
         $product['unit_price'] = $data['unit_price'];
         $product['total_price'] = $data['unit_price'] * $data['item_quantity'];
+        $product['vendor_id'] = $data['vendor_id'];
 
 
         return $product->update();

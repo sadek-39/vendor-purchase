@@ -427,6 +427,13 @@
             <label for="total_price">Total Price</label>
             <input type="text" class="form-control" id="total_price" name="total_price" placeholder="Enter total price" readonly value="{{$product->total_price}}">
         </div>
+        <div class="form-select">
+            <select name="vendor_id" id="vendor_id" class="form-select vendor" aria-label="Default select example">
+                <option>Open this select menu</option>
+
+            </select>
+        </div>
+
 
 
         <button type="submit" id="updateBtn" class="btn btn-primary">Update</button>
@@ -438,6 +445,34 @@
 
 <script>
 
+    $(document).ready(function () {
+        // jQuery methods go here...
+        getAllVendors("/vendor", 'select');
+
+        {{--console.log('#vendor_id_'+{{$product->vendor->id}});--}}
+
+
+    });
+
+    function getAllVendors(url) {
+        $.get({
+            url: url, success: function (result) {
+                // $("#" + dId).html(result);
+                for (var d in result) {
+                    var data = result[d];
+
+                    $('select')
+                        .append(`<option id="vendor_id_${data.id}" value="${data.id}">
+                                       ${data.name}
+                                  </option>`)
+                    $('#vendor_id_'+{{$product->vendor->id}}).prop('selected',true);
+
+                }
+            }
+        });
+
+
+    }
     $("#updateBtn").click(function(e){
         e.preventDefault();
 
