@@ -28,7 +28,7 @@ class ProductUpdateRequest extends FormRequest
             'item_quantity' => 'required',
             'unit_price' => 'required',
             'total_price' => 'required',
-            'vendor_id'=>'required'
+            'vendor_id'=>'required|number'
 
         ];
     }
